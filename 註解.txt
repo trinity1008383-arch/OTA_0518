@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>熱門遊戲機選購</title>
+    <script>
+        // 定義一個函式（功能），取名叫 fnOrder，當點擊「訂購」按鈕時會執行它
+        function fnOrder() {
+            // 1. 宣告變數：先在記憶體準備好位置，用來存放各種資料
+            var selName, txtQty, divShow, qty, price, total, imgName;
+
+            // 2. 抓取 HTML 元素：透過 ID 找到網頁上的選單、輸入框和顯示結果的區域
+            selName = document.getElementById("selName"); // 取得下拉選單物件
+            txtQty = document.getElementById("txtQty");   // 取得輸入數量物件
+            divShow = document.getElementById("divShow"); // 取得準備顯示結果的 <div>
+
+            // 3. 提取數值：從物件中拿取使用者輸入的真正內容
+            qty = txtQty.value;                           // 拿到使用者填寫的「數量」
+            price = selName.value;                        // 拿到使用者選擇的「價格」(option 的 value)
+            
+            // 4. 邏輯計算
+            total = qty * price;                          // 計算總額：數量 乘以 單價
+
+            // 5. 處理圖片名稱：
+            // selName.selectedIndex 是目前選中第幾個選項
+            // .text 則是拿到該選項顯示的文字（例如 "ps5"）
+            // 最後加上 ".jpg" 組合成完整的檔名（例如 "ps5.jpg"）
+            imgName = selName.options[selName.selectedIndex].text + ".jpg";
+
+            // 6. 輸出結果：使用 innerHTML 將 HTML 代碼塞進 divShow 區塊中
+            // <p> 是段落，<img> 是圖片標籤，src 指向 images 資料夾下的圖片
+            divShow.innerHTML = "<p>單價：" + price + "</p>" +
+                "<p>小計：" + total + "</p>" +
+                "<img src='images/" + imgName + "' width='200'>";           
+        }
+    </script>
+</head>
+<body>
+    <h3>熱門遊戲機選購</h3>
+    
+    <!-- 下拉選單：value 設定為數字，方便 JS 拿來直接計算 -->
+    <p>品名：
+        <select id="selName">
+            <option value="11000">ps5</option>
+            <option value="12900">switch</option>
+            <option value="12800">xboxone</option>
+        </select>
+    </p>
+
+    <!-- 數量輸入框：type="number" 確保只能填數字，min="1" 限制最小值 -->
+    <p>數量：<input type="number" id="txtQty" min="1" value="1" /></p>
+
+    <!-- 按鈕：onclick="fnOrder()" 代表點擊時去執行上面那段 script -->
+    <p><input type="button" value="訂購" onclick="fnOrder()" /></p>
+
+    <hr />
+
+    <!-- 這是「空白畫布」：JS 計算完的結果會被塞進這裡 -->
+    <div id="divShow"></div>
+</body>
+</html>
